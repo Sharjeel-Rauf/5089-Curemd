@@ -1,0 +1,19 @@
+using System;
+					
+public class Program
+{
+	public static void Main()
+	{
+		 Console.WriteLine("Please enter a Number n:"); //This line prints the text Please enter a Number:
+		int Number = Convert.ToInt32(Console.ReadLine()); // This line takes input from the user and save it in integer Number
+		int i; //This line initiate a variable i and declares it an integer
+		int sum=0; //This line initiate a variable sum and declares it an integer
+		
+	    for (i=1; i<=Number; i++) //This line initiates a loop from 1 to the Number and stores in i
+		{
+			sum=sum + i; //This line produces the sum from 1 to the Number
+		}
+		
+		Console.WriteLine("The sum of numbers from 1 to n is : " + sum); //This line prints the word The sum of numbers from 1 to n is : and concatenate it with the integer sum
+	}
+}
