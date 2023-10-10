@@ -1,0 +1,35 @@
+using System;
+
+namespace Task_8
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Please enter a number:"); //This line prints the text Please enter a number:
+            int Number = Convert.ToInt32(Console.ReadLine()); //This line takes input from user and stores it in integer number
+            int i, j; //initialization of integers i & j
+            int prime; //initialization of integer prime
+            if(Number==1) // condition if user enters integer 1
+            {
+                Console.WriteLine("1 is neither prime nor composite number");
+            }
+            for (i=2; i<=Number; i++) // this loop iterates till i is less than user input number
+            {
+                prime=1; //assigning initial value to the number prime
+                for (j = 2; j < i; j++) // this nested loop iterates till j is less than i
+                {
+                    if (i % j == 0) //condition for checking prime number
+                    {
+                        prime = 0; //converting prime to 0 in order to go to nested loop
+                        break; // breaks the nested loop
+                    }
+                }
+                if (prime==1) //condition to print prime number
+                {
+                    Console.WriteLine(i); // printing the prime no
+                }
+            }
+        }
+    }
+}

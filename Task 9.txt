@@ -1,0 +1,20 @@
+using System;
+
+namespace Task_9
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Please enter the Number whose factorial is to be found"); //This line prints the text Please enter the Number whose factorial is to be found
+            int Number = Convert.ToInt32(Console.ReadLine()); //This line takes input from the user and saves it in integer Number
+            int i; //This line initiate a variable i and declares it an integer
+            double factorial = 1; //This line initiate a variable factorial and declares it an integer
+            for (i=1; i<=Number; i++)
+            {
+                factorial = i*factorial; //This function finds the factorial of a number
+            }
+            Console.WriteLine("The factorial of " + Number + " is " + factorial); // This line prints the factorial of a number
+        }
+    }
+}

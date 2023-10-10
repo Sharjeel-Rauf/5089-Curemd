@@ -1,0 +1,21 @@
+using System;
+
+namespace Task_7
+{
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			Console.WriteLine("Please enter a Number between 1 to 12:"); //This line prints the text Please enter a Number between 1 to 12
+			int Number = Convert.ToInt32 (Console.ReadLine()); // This line takes input from the user and save it in integer Number
+			int i; //This line initiate a variable i and declares it an integer
+			int table = 0; //This line initiate a variable table and declares it an integer
+			for (i = 1; i <= 10; i++) //This line initiates a loop from 1 to 10 and stores in i
+			{
+				table = Number * i; //This line gives the table output
+				Console.WriteLine(Number + "x" + i + "=" + table); //This line produces the sum from 1 to the Number
+			}
+
+		}
+	}
+}
