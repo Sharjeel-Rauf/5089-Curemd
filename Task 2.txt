@@ -1,0 +1,11 @@
+using System;
+					
+public class Program
+{
+	public static void Main()
+	{
+		Console.WriteLine("Please enter your name:"); //This line prints the text Please enter your name
+		string Name = Console.ReadLine(); // This line takes input from the user and save it in string Name
+		Console.WriteLine("Hello," + Name); //This line prints the word Hello and concatenate it with the user input
+	}
+}

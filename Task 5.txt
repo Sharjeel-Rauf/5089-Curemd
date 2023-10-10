@@ -1,0 +1,16 @@
+using System;
+					
+public class Program
+{
+	public static void Main()
+	{
+		int i; // This line declares an integer i
+	    for (i=1; i<=100; i++) //This line initiates a loop from 1 to 100 and stores in i
+		{
+		if (i % 2==0) // This line gives the modulus of a no if it is even it is 0
+			{
+				Console.WriteLine(i); // This line prints the even numbers
+			}
+		}
+	}
+}

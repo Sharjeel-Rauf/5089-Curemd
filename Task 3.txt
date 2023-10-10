@@ -1,0 +1,20 @@
+using System;
+					
+public class Program
+{
+	public static void Main()
+	{
+	    	Console.WriteLine("Please enter first No.:"); //This line prints the text Please enter first number
+		int Number1 = Convert.ToInt32(Console.ReadLine()); // This line takes input from the user and save it in integer Number1
+		
+	    	Console.WriteLine("Please enter second No.:"); //This line prints the text Please enter second number
+		int Number2 = Convert.ToInt32(Console.ReadLine()); // This line takes input from the user and save it in integer Number2	
+		
+		int Result; // This line initiate a variable result and declares it an integer
+		
+		Result = Number1 + Number2; //This line sums the two numbers
+		
+		Console.WriteLine("The sum is:" + Result.ToString()); //This Line converts the integer Result to string and prints it
+		
+		}
+}

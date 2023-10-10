@@ -1,0 +1,17 @@
+using System;
+					
+public class Program
+{
+	public static void Main()
+	{
+	    Console.WriteLine("Please the number whose square is required:"); //This line prints the text Please the number whose square is required:
+		int Number = Convert.ToInt32(Console.ReadLine()); // This line takes input from the user and save it in integer Number
+		
+		int square;  //This line initiate a variable square and declares it an integer
+		
+		square = Number*Number; //This line multiply the two nos to get the square
+		
+		Console.WriteLine("The square of the No. is:" + square.ToString()); //This line converts the integer square to string and prints it
+		
+		}
+}
