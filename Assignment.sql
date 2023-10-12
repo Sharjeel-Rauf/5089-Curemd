@@ -92,15 +92,15 @@ LEFT JOIN Students ON Courses.CourseID = Students.CourseID
 GROUP BY Courses.CourseName;
 
 --part 5
-SELECT *
-FROM Courses
-WHERE CourseID IS NULL OR CourseID NOT IN (SELECT DISTINCT CourseID FROM Students);
+select TOP 1 Courses.CourseName
+from Courses LEFT JOIN Students ON Courses.CourseID = Students.CourseID
+GROUP BY CourseName
+ORDER BY CourseName DESC
 
 --part 6
-SELECT s1.FirstName, s1.LastName, s2.FirstName AS SharedFirstName, s2.LastName AS SharedLastName
-FROM Students s1
-JOIN Students s2 ON s1.CourseID = s2.CourseID AND s1.StudentID <> s2.StudentID
-WHERE s1.StudentID = 1;
+select * from Students
+where CourseID=(SELECT CourseID FROM Students where StudentID=1006)
+
 --part 7
 SELECT CourseName, MIN(Age) AS YoungestAge, MAX(Age) AS OldestAge
 FROM Courses
