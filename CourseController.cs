@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Collections.Generic;
@@ -9,10 +7,10 @@ using System.Data.SqlClient;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
-using The_ultimate.Model;
+using The_ultimate_stress.Model;
 using System.Collections.Generic;
 
-namespace The_ultimate.Controllers
+namespace The_ultimate_stress.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -30,46 +28,39 @@ namespace The_ultimate.Controllers
         //READING OPERATION//
 
         [HttpGet]
-        public IActionResult GetAllStudents()
+        public IActionResult GetAllCourses()
         {
-            List<Students> Students = new List<Students>();
+            List<CourseModel> Courses = new List<CourseModel>();
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                using (SqlCommand command = new SqlCommand("GetAllStudents", connection))
+                using (SqlCommand command = new SqlCommand("GetAllCourses", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        Students emp = new Students();
-                        emp.StudentID = (int)reader["StudentID"];
-                        emp.FirstName = reader["LastName"].ToString();
-                        emp.LastName = reader["LastName"].ToString();
-                        emp.Age = (int)reader["Age"];
+                        CourseModel emp = new CourseModel();
                         emp.CourseID = (int)reader["CourseID"];
-
-                        Students.Add(emp);
+                        emp.CourseName = reader["CourseName"].ToString();
+                        Courses.Add(emp);
                     }
                 }
             }
-            return Ok(Students);
+            return Ok(Courses);
         }
         // CREATING OPERATION
 
         [HttpPut]
-        public IActionResult StudentsAdd(Students Student)
+        public IActionResult AddCourses(CourseModel Courses)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                using (SqlCommand command = new SqlCommand("StudentsAdd", connection))
+                using (SqlCommand command = new SqlCommand("AddCourses", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@StudentID", Student.StudentID);
-                    command.Parameters.AddWithValue("@FirstName", Student.FirstName);
-                    command.Parameters.AddWithValue("@LastName", Student.LastName);
-                    command.Parameters.AddWithValue("@Age", Student.Age);
-                    command.Parameters.AddWithValue("@CourseID", Student.CourseID);
+                    command.Parameters.AddWithValue("@CourseID", Courses.CourseID);
+                    command.Parameters.AddWithValue("@CourseName", Courses.CourseName);
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -78,41 +69,41 @@ namespace The_ultimate.Controllers
         }
 
         //UPDATING OPERATION
-        [HttpPut("{id}")]
-        public IActionResult UpdateStudentAge(int CourseID, Students Student)
+        [HttpPut("{CourseID}")]
+        public IActionResult UpdateCoursesinfo(int CourseID, CourseModel Courses)
         {
+         
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                using (SqlCommand command = new SqlCommand("UpdateStudentAge", connection))
+                using (SqlCommand command = new SqlCommand("UpdateCoursesinfo", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@CourseID", CourseID);
-                    command.Parameters.AddWithValue("@FirstName", Student.FirstName);
-                    command.Parameters.AddWithValue("@LastName", Student.LastName);
-                    command.Parameters.AddWithValue("@Age", Student.Age);
-                    command.Parameters.AddWithValue("@DepartmentID", Student.CourseID);
+                    command.Parameters.AddWithValue("@NewCourseName", Courses.CourseName);
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
             }
-            return Ok(Student);
+            return Ok(Courses);
         }
-        //DELETING OPERATION
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteStudent(int StudentID)
+        [HttpDelete("{CourseID}")]
+        public IActionResult DeleteCourses(int CourseID)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                using (SqlCommand command = new SqlCommand("DeleteStudent", connection))
+                using (SqlCommand command = new SqlCommand("DeleteCourses", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@StudentID", StudentID);
+                    command.Parameters.AddWithValue("@CourseID", CourseID);
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
             }
             return Ok();
         }
+
+
+
     }
 }
