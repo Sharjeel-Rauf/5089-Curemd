@@ -100,7 +100,85 @@ Select *from Students;
 CREATE PROCEDURE Notenrolled
 AS
 BEGIN
- Select*from Students;
- WHERE COURSEID IS NULL;
+	Select*from Students
+	where CourseID IS NULL;
+END;
+GO
+--part 1 	List the names of students who are not enrolled in any course.
+CREATE PROCEDURE Notenrolled
+AS
+BEGIN
+	Select*from Students
+	where CourseID IS NULL;
+END;
+GO
+--part 2	Find the most popular course (the course with the most students enrolled).
+CREATE PROCEDURE Most_popular
+AS
+BEGIN
+	SELECT TOP 1 Courses.CourseName, COUNT(*) AS EnrolledStudents
+FROM Courses
+JOIN Students ON Courses.CourseID = Students.CourseID
+GROUP BY Courses.CourseName
+ORDER BY EnrolledStudents DESC;
+
+END;
+GO
+--	3. List the students who are older than the average age of students.
+CREATE PROCEDURE Older_than_average
+AS
+BEGIN
+
+SELECT FirstName,LastName FROM Students WHERE Age > (SELECT AVG(Age) FROM Students);
+
+END;
+GO
+--4. 	Find the total number of students and average age for each course.
+CREATE PROCEDURE total_average
+AS
+BEGIN
+
+SELECT Courses.CourseName, COUNT(*) AS TotalStudents, AVG(Age) AS AverageAge
+FROM Courses
+LEFT JOIN Students ON Courses.CourseID = Students.CourseID
+GROUP BY Courses.CourseName;
+
+END;
+GO
+
+--5. 	List the courses that have no students enrolled in them
+
+CREATE PROCEDURE no_student_course
+AS
+BEGIN
+
+select TOP 1 Courses.CourseName
+from Courses LEFT JOIN Students ON Courses.CourseID = Students.CourseID
+GROUP BY CourseName
+ORDER BY CourseName DESC
+
+END;
+GO
+--6.	List students who share courses with a specific student (choose one from your records
+CREATE PROCEDURE share_course
+AS
+BEGIN
+
+select * from Students
+where CourseID=(SELECT CourseID FROM Students where StudentID=1006)
+
+END;
+GO
+
+--7. 	For each course, list the youngest and oldest student.
+CREATE PROCEDURE young_old_student
+AS
+BEGIN
+
+SELECT CourseName, MIN(Age) AS YoungestAge, MAX(Age) AS OldestAge
+FROM Courses
+JOIN Students ON Courses.CourseID = Students.CourseID
+GROUP BY CourseName;
+
 END;
 GO
