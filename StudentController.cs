@@ -14,11 +14,11 @@ namespace The_ultimate_stress.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CourseController : ControllerBase
+    public class StudentsController : ControllerBase
     {
         private readonly string _connectionString;
 
-        public CourseController(IConfiguration configuration)
+        public StudentsController(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
@@ -28,39 +28,47 @@ namespace The_ultimate_stress.Controllers
         //READING OPERATION//
 
         [HttpGet]
-        public IActionResult GetAllCourses()
+        public IActionResult GetAllStudents()
         {
-            List<CourseModel> Courses = new List<CourseModel>();
+            List<StudentsModel> Students = new List<StudentsModel>();
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                using (SqlCommand command = new SqlCommand("GetAllCourses", connection))
+                using (SqlCommand command = new SqlCommand("GetAllStudents", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        CourseModel emp = new CourseModel();
+                        StudentsModel emp = new StudentsModel();
+                        emp.StudentID = (int)reader["StudentID"];
+                        emp.FirstName = reader["FirstName"].ToString();
+                        emp.LastName = reader["LastName"].ToString();
+                        emp.Age = (int)reader["Age"];
                         emp.CourseID = (int)reader["CourseID"];
-                        emp.CourseName = reader["CourseName"].ToString();
-                        Courses.Add(emp);
+
+                        Students.Add(emp);
                     }
                 }
             }
-            return Ok(Courses);
+            return Ok(Students);
         }
+
         // CREATING OPERATION
 
         [HttpPut]
-        public IActionResult AddCourses(CourseModel Courses)
+        public IActionResult StudentsAdd(StudentsModel Student)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                using (SqlCommand command = new SqlCommand("AddCourses", connection))
+                using (SqlCommand command = new SqlCommand("StudentsAdd", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@CourseID", Courses.CourseID);
-                    command.Parameters.AddWithValue("@CourseName", Courses.CourseName);
+                    command.Parameters.AddWithValue("@StudentID", Student.StudentID);
+                    command.Parameters.AddWithValue("@FirstName", Student.FirstName);
+                    command.Parameters.AddWithValue("@LastName", Student.LastName);
+                    command.Parameters.AddWithValue("@Age", Student.Age);
+                    command.Parameters.AddWithValue("@CourseID", Student.CourseID);
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -69,42 +77,43 @@ namespace The_ultimate_stress.Controllers
         }
 
         //UPDATING OPERATION
-        [HttpPut]
-        [Route("courseupdate")]
-        public IActionResult UpdateCoursesinfo(int CourseID, CourseModel Courses)
-        {
 
+        [HttpPut]
+        [Route("studentupdate")]
+
+        public IActionResult UpdateStudentinfo(int StudentID, StudentsModel Student)
+        {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                using (SqlCommand command = new SqlCommand("UpdateCoursesinfo", connection))
+                using (SqlCommand command = new SqlCommand("UpdateStudentinfo", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@CourseID", Courses.CourseID);
-                    command.Parameters.AddWithValue("@CourseName", Courses.CourseName);
+                    command.Parameters.AddWithValue("@StudentID", Student.StudentID);
+                    command.Parameters.AddWithValue("@FirstName", Student.FirstName);
+                    command.Parameters.AddWithValue("@LastName", Student.LastName);
+                    command.Parameters.AddWithValue("@Age", Student.Age);
+                    command.Parameters.AddWithValue("@CourseID", Student.CourseID);
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
             }
-            return Ok(Courses);
+            return Ok(Student);
         }
 
-        [HttpDelete("{CourseID}")]
-        public IActionResult DeleteCourses(int CourseID)
+        [HttpDelete("{StudentID}")]
+        public IActionResult DeleteStudent(int StudentID)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                using (SqlCommand command = new SqlCommand("DeleteCourses", connection))
+                using (SqlCommand command = new SqlCommand("DeleteStudent", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@CourseID", CourseID);
+                    command.Parameters.AddWithValue("@StudentID", StudentID);
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
             }
             return Ok();
         }
-
-
-
     }
 }
